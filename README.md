@@ -47,4 +47,4 @@ Currently, two official plugins are available:
 * Попытка восстановления
 
 **Ссылка на проект**
-https://nadia-seliankina.github.io/mesto/index.html
+https://nadia-seliankina.github.io/mesto-react/index.html
