@@ -12,6 +12,7 @@ const mapCards = (cards) => {
     alt: item.name,
     title: item.name,
     likes: item.likes.length,
+    owner: item.owner,
   }));
 };
 
@@ -26,7 +27,7 @@ export default function Main({
   const [userDescription, setUserDescription] = useState(
     "Исследователь океана"
   );
-  const [userAvatar, setUserAvatar] = useState({ avatarImage });
+  const [userAvatar, setUserAvatar] = useState("avatarImage");
   const [cards, setCards] = useState([]);
 
   useEffect(() => {
@@ -43,59 +44,58 @@ export default function Main({
   }, []);
 
   return (
-    <>
-      <main className="content">
-        <section className="profile">
-          <button
-            className="profile__avatar-button"
-            name="avatar-button"
-            type="button"
-            aria-label="Редактировать"
-            onClick={onEditAvatar}
-          >
-            <div
-              className="profile__avatar"
-              style={{ backgroundImage: `url(${userAvatar})` }}
-            ></div>
-          </button>
-          <div className="profile__info">
-            <div className="profile__text">
-              <h1 className="profile__name">{userName}</h1>
-              <button
-                className="profile__edit-button"
-                name="edit-button"
-                type="button"
-                aria-label="Редактировать"
-                onClick={onEditProfile}
-              >
-                <img
-                  className="profile__edit-button-image"
-                  src={editImage}
-                  alt="Редактировать"
-                />
-              </button>
-            </div>
-            <p className="profile__activity">{userDescription}</p>
+    <main className="content">
+      <section className="profile">
+        <button
+          className="profile__avatar-button"
+          name="avatar-button"
+          type="button"
+          aria-label="Редактировать"
+          onClick={onEditAvatar}
+        >
+          <div
+            className="profile__avatar"
+            style={{ backgroundImage: `url(${userAvatar})` }}
+          ></div>
+        </button>
+        <div className="profile__info">
+          <div className="profile__text">
+            <h1 className="profile__name">{userName}</h1>
+            <button
+              className="profile__edit-button"
+              name="edit-button"
+              type="button"
+              aria-label="Редактировать"
+              onClick={onEditProfile}
+            >
+              <img
+                className="profile__edit-button-image"
+                src={editImage}
+                alt="Редактировать"
+              />
+            </button>
           </div>
-          <button
-            className="profile__add-button"
-            name="add-button"
-            type="button"
-            aria-label="Добавить"
-            onClick={onAddPlace}
-          >
-            <img
-              className="profile__add-button-image"
-              src={plusImage}
-              alt="Добавить"
-            />
-          </button>
-        </section>
-        <section className="elements">
-          <ul className="elements__list">
-            {cards.map((cardData) => (
+          <p className="profile__activity">{userDescription}</p>
+        </div>
+        <button
+          className="profile__add-button"
+          name="add-button"
+          type="button"
+          aria-label="Добавить"
+          onClick={onAddPlace}
+        >
+          <img
+            className="profile__add-button-image"
+            src={plusImage}
+            alt="Добавить"
+          />
+        </button>
+      </section>
+      <section className="elements">
+        <ul className="elements__list">
+          {cards.map((cardData) => (
+            <li key={cardData.id} className="element">
               <Card
-                key={cardData.id}
                 src={cardData.src}
                 alt={cardData.alt}
                 title={cardData.title}
@@ -103,10 +103,10 @@ export default function Main({
                 onCardClick={onCardClick}
                 card={cardData}
               />
-            ))}
-          </ul>
-        </section>
-      </main>
-    </>
+            </li>
+          ))}
+        </ul>
+      </section>
+    </main>
   );
 }

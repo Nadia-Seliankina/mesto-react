@@ -5,24 +5,24 @@ class Api {
         this._headers = config.headers;
     }
 
-    #onResponce(res) {
+    #onResponse(res) {
         return res.ok ? res.json() : res.json().then(errData => Promise.reject(errData));
     }
 
     // Инфо о пользователе с сервера
     getInfoUser() {
-        return fetch(`${this._url}/v1/cohort-73/users/me`, {
+        return fetch(`${this._url}/users/me`, {
             headers: this._headers
         })
-        .then(this.#onResponce)
+        .then(this.#onResponse)
     }
     
     // Начальные карточки с сервера
     getInitialCards() {
-        return fetch(`${this._url}/v1/cohort-73/cards`, {
+        return fetch(`${this._url}/cards`, {
             headers: this._headers
         })
-        .then(this.#onResponce)
+        .then(this.#onResponse)
     }
 
     getAllInfo() {
@@ -31,7 +31,7 @@ class Api {
 
     // Редактирование профиля
     editProfile(data) {
-        return fetch(`${this._url}/v1/cohort-73/users/me`, {
+        return fetch(`${this._url}/users/me`, {
             method: 'PATCH',
             headers: this._headers,
             body: JSON.stringify({
@@ -39,33 +39,33 @@ class Api {
                 about: data.about
             })
         })
-        .then(this.#onResponce)
+        .then(this.#onResponse)
     }
 
     // Обновление аватара пользователя
     editAvatar(data) {
-        return fetch(`${this._url}/v1/cohort-73/users/me/avatar`, {
+        return fetch(`${this._url}/users/me/avatar`, {
             method: 'PATCH',
             headers: this._headers,
             body: JSON.stringify({
                 avatar: data.link
             })
         })
-        .then(this.#onResponce)
+        .then(this.#onResponse)
     }
 
     // Удаление карточки
     removeCard(cardId) {
-        return fetch(`${this._url}/v1/cohort-73/cards/${cardId}`, {
+        return fetch(`${this._url}/cards/${cardId}`, {
             method: 'DELETE',
             headers: this._headers
         })
-        .then(this.#onResponce)
+        .then(this.#onResponse)
     }
 
     // Добавление карточки
     addCard(data) {
-        return fetch(`${this._url}/v1/cohort-73/cards`, {
+        return fetch(`${this._url}/cards`, {
             method: 'POST',
             headers: this._headers,
             body: JSON.stringify({
@@ -73,21 +73,21 @@ class Api {
                 link: data.link
             })
         })
-        .then(this.#onResponce)
+        .then(this.#onResponse)
     }
 
     // Лайкнуть карточку
     changeLike(cardId, isLiked) {
-        return fetch(`${this._url}/v1/cohort-73/cards/likes/${cardId}`, {
+        return fetch(`${this._url}/cards/likes/${cardId}`, {
             method: isLiked ? 'DELETE' : 'PUT',
             headers: this._headers
         })
-        .then(this.#onResponce)
+        .then(this.#onResponse)
     }
 }
 
 const configApi = {
-    url: 'https://mesto.nomoreparties.co',
+    url: 'https://mesto.nomoreparties.co/v1/cohort-73',
     headers: {
       "content-type": "application/json",
       authorization: '0523e71c-6164-4ff4-82c6-ca81e8bb5b70'

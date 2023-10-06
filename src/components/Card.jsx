@@ -2,14 +2,19 @@ import likeImage from "../images/Vector.svg";
 import deleteImage from "../images/Delete.svg";
 
 export default function Card({ src, alt, title, likes, onCardClick, card}) {
+
+  const handleClick = () => {
+    onCardClick(card);
+  }
+
   return (
-    <li className="element">
+    <>
       <button
         className="element__image-button"
         name="image-button"
         type="button"
         aria-label="Открыть фото"
-        onClick={() => onCardClick(card)}
+        onClick={handleClick}
       >
         <img className="element__image" src={src} alt={alt} />
       </button>
@@ -39,6 +44,6 @@ export default function Card({ src, alt, title, likes, onCardClick, card}) {
           alt="Удалить"
         />
       </button>
-    </li>
+    </>
   );
 }

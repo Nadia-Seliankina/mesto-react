@@ -3,39 +3,42 @@ import "../index.css";
 import Header from "./Header";
 import Main from "./Main";
 import Footer from "./Footer";
-import PopupWithForm from "./PopupWithFormNew";
+import PopupWithForm from "./PopupWithForm";
 import ImagePopup from "./ImagePopup";
 
 function App() {
   // Хук, управляющий внутренним состоянием попапа РЕДАКТИРОВАНИЕ ПРОФИЛЯ
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
+  // Хук, управляющий внутренним состоянием попапа НОВОЕ МЕСТО
+  const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
+  // Хук, управляющий внутренним состоянием попапа ОБНОВИТЬ АВАТАР
+  const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
+  // Хук, управляющий внутренним состоянием попапа БОЛЬШОЙ КАРТИНКИ
+  const [isImagePopupOpen, setIsImagePopupOpen] = useState(false);
+  const [selectedCard, setSelectedCard] = useState(null);
+
   const handleEditProfileClick = () => {
     setIsEditProfilePopupOpen(true);
   };
 
-  // Хук, управляющий внутренним состоянием попапа НОВОЕ МЕСТО
-  const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
   const handleAddPlaceClick = () => {
     setIsAddPlacePopupOpen(true);
   };
 
-  // Хук, управляющий внутренним состоянием попапа ОБНОВИТЬ АВАТАР
-  const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
   const handleEditAvatarClick = () => {
     setIsEditAvatarPopupOpen(true);
   };
 
-  // Хук, управляющий внутренним состоянием попапа БОЛЬШОЙ КАРТИНКИ
-  const [selectedCard, setSelectedCard] = useState(null);
   const handleCardClick = (card) => {
     setSelectedCard(card);
+    setIsImagePopupOpen(true);
   };
 
   const closeAllPopups = () => {
     setIsEditProfilePopupOpen(false);
     setIsAddPlacePopupOpen(false);
     setIsEditAvatarPopupOpen(false);
-    setSelectedCard(null);
+    setIsImagePopupOpen(false);
   };
 
   return (
@@ -160,11 +163,7 @@ function App() {
         onClose={closeAllPopups}
       ></PopupWithForm>
       {/* Pop-up big image*/}
-      {selectedCard && (<ImagePopup 
-       card={selectedCard} 
-       onClose={closeAllPopups}
-      />
-      )}
+      <ImagePopup isOpen={isImagePopupOpen} card={selectedCard} onClose={closeAllPopups} />
     </>
   );
 }

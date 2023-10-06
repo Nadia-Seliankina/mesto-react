@@ -1,18 +1,16 @@
 import closeIcon from "../images/Close-Icon.svg";
 
-export default function ImagePopup({ card, onClose }
+export default function ImagePopup({ isOpen, card, onClose }
 ) {
   // Исользуем JavaScript-шаблон для склейки значения атрибута
-  const classNamePopup = `popup ${card ? "popup_opened" : ""}`;
-  //const imageSrc = isOpen.src;
-  //const imageAlt = isOpen.alt;
-  //console.log(card);
+  const classNamePopup = `popup ${isOpen ? "popup_opened" : ""}`;
 
   return (
   <section className={classNamePopup} id="popup-big-image">
       <div className="popup__container-big-image">
-        <img className="popup__big-photo" src={card.src} alt={card.alt} />
-        <h2 className="popup__title-big-image">{card.alt}</h2>
+        {/*оператор опциональной последовательности*/}
+        <img className="popup__big-photo" src={card?.src} alt={card?.alt} />
+        <h2 className="popup__title-big-image">{card?.alt}</h2>
         <button
           name="popup-image-button-close"
           type="button"
