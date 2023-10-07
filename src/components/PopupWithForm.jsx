@@ -1,7 +1,7 @@
 import { Children } from "react";
 import closeIcon from "../images/Close-Icon.svg";
 
-export default function PopupWithFormNew({
+export default function PopupWithForm({
   name,
   title,
   children,
