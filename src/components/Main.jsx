@@ -4,44 +4,21 @@ import editImage from "../images/Edit.svg";
 import plusImage from "../images/Plus.svg";
 import api from "../utils/api";
 import Card from "./Card";
-
-const mapCards = (cards) => {
-  return cards.map((item) => ({
-    id: item._id,
-    src: item.link,
-    alt: item.name,
-    title: item.name,
-    likes: item.likes.length,
-    owner: item.owner,
-  }));
-};
+import { CurrentUserContext } from '../contexts/CurrentUserContext';
+import { useContext } from 'react';
 
 export default function Main({
   onEditProfile,
   onAddPlace,
   onEditAvatar,
   onCardClick,
+  onCardLike,
+  cards,
+  onCardDelete
 }) {
-  // Стейт для данных из API
-  const [userName, setUserName] = useState("Жак-Ив Кусто");
-  const [userDescription, setUserDescription] = useState(
-    "Исследователь океана"
-  );
-  const [userAvatar, setUserAvatar] = useState("avatarImage");
-  const [cards, setCards] = useState([]);
 
-  useEffect(() => {
-    api
-      .getAllInfo()
-      .then(([dataUser, dataCards]) => {
-        console.log([dataUser, dataCards]);
-        setUserName(dataUser.name);
-        setUserDescription(dataUser.about);
-        setUserAvatar(dataUser.avatar);
-        setCards(mapCards(dataCards));
-      })
-      .catch((err) => console.log(err));
-  }, []);
+  // Подписываемся на контекст CurrentUserContext
+  const currentUser = useContext(CurrentUserContext);
 
   return (
     <main className="content">
@@ -53,14 +30,17 @@ export default function Main({
           aria-label="Редактировать"
           onClick={onEditAvatar}
         >
-          <div
+          <img
             className="profile__avatar"
-            style={{ backgroundImage: `url(${userAvatar})` }}
-          ></div>
+            src={`${currentUser?.avatar}`}
+            alt="аватар"
+            //style={{ backgroundImage: `url(${currentUser?.avatar})` }}
+          >
+          </img>
         </button>
         <div className="profile__info">
           <div className="profile__text">
-            <h1 className="profile__name">{userName}</h1>
+            <h1 className="profile__name">{currentUser?.name}</h1>
             <button
               className="profile__edit-button"
               name="edit-button"
@@ -75,7 +55,7 @@ export default function Main({
               />
             </button>
           </div>
-          <p className="profile__activity">{userDescription}</p>
+          <p className="profile__activity">{currentUser?.about}</p>
         </div>
         <button
           className="profile__add-button"
@@ -94,14 +74,16 @@ export default function Main({
       <section className="elements">
         <ul className="elements__list">
           {cards.map((cardData) => (
-            <li key={cardData.id} className="element">
+            <li key={cardData._id} className="element">
               <Card
-                src={cardData.src}
-                alt={cardData.alt}
-                title={cardData.title}
-                likes={cardData.likes}
+                src={cardData.link}
+                alt={cardData.name}
+                title={cardData.name}
+                likes={cardData.likes.length}
                 onCardClick={onCardClick}
                 card={cardData}
+                onCardLike={onCardLike}
+                onCardDelete={onCardDelete}
               />
             </li>
           ))}

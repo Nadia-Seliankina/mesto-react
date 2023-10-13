@@ -9,8 +9,8 @@ export default function ImagePopup({ isOpen, card, onClose }
   <section className={classNamePopup} id="popup-big-image">
       <div className="popup__container-big-image">
         {/*оператор опциональной последовательности*/}
-        <img className="popup__big-photo" src={card?.src} alt={card?.alt} />
-        <h2 className="popup__title-big-image">{card?.alt}</h2>
+        <img className="popup__big-photo" src={card?.link} alt={card?.name} />
+        <h2 className="popup__title-big-image">{card?.name}</h2>
         <button
           name="popup-image-button-close"
           type="button"
