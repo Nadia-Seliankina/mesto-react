@@ -52,9 +52,9 @@ function App() {
     setIsEditAvatarPopupOpen(true);
   };
 
-  const handleDeleteClick = () => {
-    setisDeletePopupOpen(true);
-  };
+  //const handleDeleteClick = () => {
+    //setisDeletePopupOpen(true);
+  //};
 
   const handleCardClick = (card) => {
     setSelectedCard(card);
@@ -159,7 +159,7 @@ function App() {
   //};
 
   const handleCardDelete = (card) => {
-    e.preventDefault();
+    //e.preventDefault();
     api
       .removeCard(card._id)
       .then((res) => {
@@ -183,9 +183,9 @@ function App() {
           onCardClick={handleCardClick}
           onCardLike={handleCardLike}
           cards={cards}
-          //onCardDelete={handleCardDelete}
+          onCardDelete={handleCardDelete}
           //onDeletePopup={handleDeleteClick}
-          onCardDelete={handleDeleteClick}
+          //onCardDelete={handleDeleteClick}
         />
         <Footer />
         {/* Pop-up Редактировать профиль */}
