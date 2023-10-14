@@ -1,5 +1,5 @@
 import PopupWithForm from "./PopupWithForm";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function AddPlacePopup({ isOpen, onClose, onAddPlace }) {
   // Стейт, в котором содержится значение инпута
@@ -24,9 +24,13 @@ export default function AddPlacePopup({ isOpen, onClose, onAddPlace }) {
       link: link
     };
     onAddPlace(card);
+  }
+
+  // Очистка импутов
+  useEffect(() => {
     setName('');
     setLink('');
-  }
+  }, [isOpen]);
 
   return (
     <PopupWithForm

@@ -8,44 +8,41 @@ export default function PopupWithForm({
   btnText,
   isOpen,
   onClose,
-  onSubmit
-}) 
-
-{
+  onSubmit,
+}) {
   // Исользуем JavaScript-шаблон для склейки значения атрибута
   const classNamePopup = `popup ${isOpen ? "popup_opened" : ""}`;
 
   return (
-    <>
-      <section className={classNamePopup} id={`popup-${name}`}>
-        <div className="popup__container">
-          <h2 className="popup__heading">{title}</h2>
-          <form className="popup__form" name={name} noValidate onSubmit={onSubmit}>
-            <fieldset className="popup__fieldset">{children}</fieldset>
-            <button
-              name="button-save"
-              type="submit"
-              className="popup__button-save"
-            >
-              {btnText}
-            </button>
-          </form>
+    <section className={classNamePopup} id={`popup-${name}`}>
+      <div className="popup__container">
+        <h2 className="popup__heading">{title}</h2>
+        <form
+          className="popup__form"
+          name={name}
+          noValidate
+          onSubmit={onSubmit}
+        >
+          <fieldset className="popup__fieldset">{children}</fieldset>
           <button
-            name="popup-button-close"
-            type="button"
-            className="popup__button-close"
-            aria-label="Закрыть"
-            id="popup-button-close"
-            onClick={onClose}
+            name="button-save"
+            type="submit"
+            className="popup__button-save"
           >
-            <img
-              className="popup__button-image"
-              src={closeIcon}
-              alt="Закрыть"
-            />
+            {btnText}
           </button>
-        </div>
-      </section>
-    </>
+        </form>
+        <button
+          name="popup-button-close"
+          type="button"
+          className="popup__button-close"
+          aria-label="Закрыть"
+          id="popup-button-close"
+          onClick={onClose}
+        >
+          <img className="popup__button-image" src={closeIcon} alt="Закрыть" />
+        </button>
+      </div>
+    </section>
   );
 }

@@ -1,9 +1,8 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import "../index.css";
 import Header from "./Header";
 import Main from "./Main";
 import Footer from "./Footer";
-import PopupWithForm from "./PopupWithForm";
 import EditProfilePopup from "./EditProfilePopup";
 import EditAvatarPopup from "./EditAvatarPopup";
 import AddPlacePopup from "./AddPlacePopup";
@@ -24,7 +23,7 @@ function App() {
   const [isImagePopupOpen, setIsImagePopupOpen] = useState(false);
   const [selectedCard, setSelectedCard] = useState(null);
   // Хук, управляющий состоянием попапа УДАЛИТЬ
-  const [isDeletePopupOpen, setisDeletePopupOpen] = useState(false);
+  const [isDeletePopupOpen, setIsDeletePopupOpen] = useState(false);
 
   // Контекст, чтобы все компоненты приложения могли получить доступ к этим данным
   // Стейт, отвечающий за данные текущего пользователя
@@ -51,10 +50,6 @@ function App() {
   const handleEditAvatarClick = () => {
     setIsEditAvatarPopupOpen(true);
   };
-
-  //const handleDeleteClick = () => {
-    //setisDeletePopupOpen(true);
-  //};
 
   const handleCardClick = (card) => {
     setSelectedCard(card);
@@ -105,7 +100,7 @@ function App() {
     setIsAddPlacePopupOpen(false);
     setIsEditAvatarPopupOpen(false);
     setIsImagePopupOpen(false);
-    setisDeletePopupOpen(false);
+    setIsDeletePopupOpen(false);
   };
 
   useEffect(() => {
@@ -133,22 +128,32 @@ function App() {
         //setIsLoading(true)});
   };
 
-  //const [card, setCard] = useState("");
+  const handleCardDelete = (card) => {
+    setSelectedCard(card);
+    setIsDeletePopupOpen(true);
+  };
 
-  //function handleSubmit(e) {
-    //setCard(e.target);
-    // Запрещаем браузеру переходить по адресу формы
-    //e.preventDefault();
-    // Передаём значения во внешний обработчик
-    //const CardID = card._id
-    //onDelete(CardID);
-  //}
-
-  //const handleCardDelete = (CardID) => {
+  const handleSubmitDelete = useCallback(
+    function (e) {
+      e.preventDefault();
+      api
+      .removeCard(selectedCard._id)
+      .then((res) => {
+        setCards((state) => {
+          return state.filter((item) => {
+            return item._id !== selectedCard._id;
+          });
+        });
+        closeAllPopups();
+      })
+      .catch((err) => console.log(err));
+    }, [selectedCard]
+  )
+  
+  //const handleCardDelete = (card) => {
     //api
-      //.removeCard(CardID)
+      //.removeCard(card._id)
       //.then((res) => {
-        //console.log(res);
         //setCards((state) => {
           //return state.filter((item) => {
             //return item._id !== card._id;
@@ -157,20 +162,6 @@ function App() {
       //})
       //.catch((err) => console.log(err));
   //};
-
-  const handleCardDelete = (card) => {
-    //e.preventDefault();
-    api
-      .removeCard(card._id)
-      .then((res) => {
-        setCards((state) => {
-          return state.filter((item) => {
-            return item._id !== card._id;
-          });
-        });
-      })
-      .catch((err) => console.log(err));
-  };
 
   return (
     <>
@@ -210,7 +201,7 @@ function App() {
         <DeletePopup
           isOpen={isDeletePopupOpen}
           onClose={closeAllPopups}
-          onDelete={handleCardDelete}
+          onDelete={handleSubmitDelete}
         />
         {/* Pop-up big image*/}
         <ImagePopup
